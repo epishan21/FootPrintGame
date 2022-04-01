@@ -24,18 +24,45 @@ public class Robot {
 
     // --------------------------- Перемещение ------------------------------------
     private boolean canMoveTo(AbstractCell to) {
-        return true;
+        return to.getClass().equals(TargetHexagon.class) || ((Cell)to).getFootprint() != this.footPrint;
     }
 
     public void move(Direction direct) {
+
+        AbstractCell pos = _cellOwner;
+
+        AbstractCell newPos = pos.neighbor(direct);
+        if (newPos == null) {
+            return;
+        }
+
+        if (canMoveTo(newPos)) {
+            if (!newPos.isEmpty() && ((Cell)newPos).getKey() != null) {
+                //подобрать ключ
+                this.putKey(newPos);
+            }
+            //шагнуть
+            pos.extractRobot();
+            newPos.putRobot(this);
+            if(!(pos.getClass().equals(TargetHexagon.class)))
+                colorCell(pos); // установить цвет ячейки равным цвету робота
+        }
+
+        // Генерируем событие
+        fireRobotAction();
     }
 
     // ---------------------- Закрашивание ячейки -----------------------------
-    public void colorCell(AbstractCell pos) {
+    public void colorCell(AbstractCell pos)
+    {
+        ((Cell) pos).setFootprint(this.footPrint);
     }
 
     // ---------------------- Взаимодействие с ключем -----------------------------
-    public void putKey(AbstractCell pos) {
+    public void putKey(AbstractCell pos)
+    {
+        Key.keys.remove(((Cell)pos).getKey());
+        ((Cell)pos).extractKey();
     }
 
     // ---------------------- Взаимодействие с владельцем -----------------------------
