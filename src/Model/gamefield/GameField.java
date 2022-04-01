@@ -193,20 +193,3 @@ public class GameField implements Iterable<AbstractCell> {
         }
     }
 }
-
-//                    //Если это не ячейка не в последней строке то можно ставить снизу(Если снизу есть то ее можно связать)
-//                    if (height() > 1 && row < height() - 1) {
-//                        cell.setNeighbor(Direction.south(), cell(row + 1, col));
-//                    }
-//                    //Если это первая строка то вверху нельзя поставить(Если сверху есть то ее можно связать)
-//                    if (row > 0) {
-//                        cell.setNeighbor(Direction.north(), cell(row - 1, col));
-//                    }
-//                    //Если это не ячейка не в последней колонке то можно ставить слева(Если справа есть то можно связать)
-//                    if (width() > 1 && col < width() - 1) {
-//                        cell.setNeighbor(Direction.east(), cell(row, col + 1));
-//                    }
-//                    //Если это первая колонка то слева нельзя поставить(Если слева есть то ее можно связать)
-//                    if (col > 0) {
-//                        cell.setNeighbor(Direction.west(), cell(row, col - 1));
-//                    }
