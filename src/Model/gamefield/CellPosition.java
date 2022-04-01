@@ -4,8 +4,8 @@ package Model.gamefield;
 public class CellPosition {
 
     // ----------------------- Свойства --------------------------
-    private final int _row = 0;
-    private final int _column = 0;
+    private final int _row;
+    private final int _column;
 
     public int row() { return _row; }
 
@@ -19,19 +19,30 @@ public class CellPosition {
 
     // ----------------------- Порождение --------------------------
     public CellPosition(int row, int col) {
-
+        validate(row, col);
+        _row = row;
+        _column = col;
     }
 
     // ------------------ Сравнение позиций ----------------
     @Override
     public boolean equals(Object other){
+
+        if(other instanceof CellPosition) {
+            // Типы совместимы, можно провести преобразование
+            CellPosition otherPosition = (CellPosition)other;
+            // Возвращаем результат сравнения углов
+            return row() == otherPosition.row() && column() == otherPosition.column();
+        }
+
         return false;
     }
 
     // --------------------------------------------------
     @Override
     public int hashCode() {
-        return 0;
+        // Одинаковые объекты должны возвращать одинаковые значения
+        return row() * 1000 + column();
     }
 
 
