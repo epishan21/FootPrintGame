@@ -4,8 +4,8 @@ package Model.gamefield;
 public class TargetHexagon extends AbstractCell {
 
     // ---------------------------- Порождение ---------------------
-    public TargetHexagon() {
-
+    public TargetHexagon(CellPosition position) {
+        super(position);
     }
 }
 
