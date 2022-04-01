@@ -12,25 +12,28 @@ public abstract class AbstractCell {
 
     private Robot _robot;
 
-    public CellPosition position() {
-        return _pos;
-    }
-    //----------------------- Порождение --------------------------
+    public CellPosition position() { return _pos; }
 
-    protected AbstractCell(CellPosition position) {
-        _pos = position;
-    }
+    //----------------------- Порождение --------------------------
+    protected AbstractCell(CellPosition position) { _pos = position; }
 
     private final Map<Direction, AbstractCell> _neighbors = new HashMap<>();
 
     // ----------------------- Взаимодействие с соседями --------------------------
     public AbstractCell neighbor(Direction direct) {
 
+        if(_neighbors.containsKey(direct)) {
+            return _neighbors.get(direct);
+        }
+
         return null;
     }
 
     public void setNeighbor(Direction direct, AbstractCell neighbor) {
-
+        if(neighbor != this && !isNeighbor(neighbor)) {
+            _neighbors.put(direct, neighbor);
+            neighbor.setNeighbor(direct.opposite(), this);
+        }
     }
 
     public boolean isNeighbor(AbstractCell other) {
@@ -45,13 +48,22 @@ public abstract class AbstractCell {
     public boolean putRobot(Robot robot) {
         boolean ok = false;
 
+        if(_robot == null) {
+            ok = true;
+            robot.setOwner(this);
+            _robot = robot;
+        }
         return ok;
     }
 
     public Robot extractRobot(){
 
-        Robot removedRobot = _robot;
+        if( !isEmpty() ) {
+            _robot.removeOwner();
+        }
 
+        Robot removedRobot = _robot;
+        _robot = null;
         return removedRobot;
     }
 
