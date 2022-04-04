@@ -71,4 +71,19 @@ public class TestRobot {
 
         Assert.assertEquals(expectedPos, resultPos);
     }
+
+    //Робот хочет шагнуть за пределы поля
+    @Test
+    public void robotStepOutsideField()
+    {
+        GameField _field = new GameField(1,1);
+        _field.getCell(0, 0).putRobot(_field.robot());
+
+        _field.robot().move(Direction.south());
+
+        CellPosition expectedPos = new CellPosition( 0, 0 );
+        CellPosition resultPos = _field.getCell(0, 0).getRobot().getPos();
+
+        Assert.assertEquals(expectedPos, resultPos);
+    }
 }
