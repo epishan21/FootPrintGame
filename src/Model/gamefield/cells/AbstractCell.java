@@ -1,16 +1,16 @@
-package Model.gamefield;
+package Model.gamefield.cells;
 
 import java.util.HashMap;
 import java.util.Map;
 
+import Model.gamefield.CellPosition;
+import Model.gamefield.Direction;
 import Model.units.Robot;
 
 public abstract class AbstractCell {
 
     // ----------------------- Свойства --------------------------
     private CellPosition _pos;
-
-    private Robot _robot;
 
     public CellPosition position() { return _pos; }
 
@@ -40,34 +40,4 @@ public abstract class AbstractCell {
         return _neighbors.containsValue(other);
     }
 
-    // ----------------------- Взаимодействие с роботом --------------------------
-    public Robot getRobot() {
-        return _robot;
-    }
-
-    public boolean putRobot(Robot robot) {
-        boolean ok = false;
-
-        if(_robot == null) {
-            ok = true;
-            robot.setOwner(this);
-            _robot = robot;
-        }
-        return ok;
-    }
-
-    public Robot extractRobot(){
-
-        if( !isEmpty() ) {
-            _robot.removeOwner();
-        }
-
-        Robot removedRobot = _robot;
-        _robot = null;
-        return removedRobot;
-    }
-
-    public boolean isEmpty() {
-        return _robot == null;
-    }
 }
