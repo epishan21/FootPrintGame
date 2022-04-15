@@ -1,24 +1,17 @@
-package Model.gamefield;
+package Model.gamefield.cells;
 
+import Model.gamefield.CellPosition;
 import Model.units.Key;
-
-import java.awt.*;
 
 
 // Ячейка поля
-public class Cell extends AbstractCell {
+public class PassableCell extends UnitCell {
 
     // ----------------------- Порождение ----------------------------------------
-    public Cell(CellPosition position) { super(position); }
+    public PassableCell(CellPosition position) { super(position); }
 
     // ----------------------- Свойства --------------------------
     Key _key;
-
-    private Color footPrint = new Color(136, 128, 170);
-
-    public Color getFootprint() { return footPrint; }
-
-    public void setFootprint(Color color) { this.footPrint = color; }
 
     // ------------------------------- Владение ключем ----------------------------
     public Key getKey() { return _key; }

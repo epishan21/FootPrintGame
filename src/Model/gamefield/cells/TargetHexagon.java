@@ -1,7 +1,9 @@
-package Model.gamefield;
+package Model.gamefield.cells;
+
+import Model.gamefield.CellPosition;
 
 // Целевой шестиугольник
-public class TargetHexagon extends AbstractCell {
+public class TargetHexagon extends UnitCell {
 
     // ---------------------------- Порождение ---------------------
     public TargetHexagon(CellPosition position) {

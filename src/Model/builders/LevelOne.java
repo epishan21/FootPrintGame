@@ -1,15 +1,16 @@
 package Model.builders;
 
-import Model.gamefield.Cell;
-import Model.gamefield.GameField;
 import Model.gamefield.Builder;
+import Model.gamefield.CellPosition;
+import Model.gamefield.GameField;
+import Model.gamefield.cells.*;
 import Model.units.Key;
 
 public class LevelOne extends Builder {
 
     @Override
     protected void seedRobot() {
-        _field.getCell(0, 0).putRobot(_field.robot());
+        ((UnitCell) _field.getCell(0, 0)).putRobot(_field.robot());
     }
 
     @Override
@@ -18,21 +19,26 @@ public class LevelOne extends Builder {
     }
 
     @Override
-    protected void seedExit() {
-        _field.setTargetHexagon(0,1);
-        _field.setTargetHexagon(3,4); //для проверки, он не создастся
+    protected void seedAnyCell() {
+        _field.setAnyCell(new BlockedCell(new CellPosition(1, 1)));
+        _field.setAnyCell(new BlockedCell(new CellPosition(0, 3)));
+        _field.setAnyCell(new BlockedCell(new CellPosition(5, 6)));
+        _field.setAnyCell(new PassableCell(new CellPosition(5, 5)));
+        _field.setAnyCell(new PassableCell(new CellPosition(4, 5)));
+        _field.setAnyCell(new PassableCell(new CellPosition(0, 2)));
+        _field.setAnyCell(new TargetHexagon(new CellPosition(0, 1)));
+        _field.setAnyCell(new TargetHexagon(new CellPosition(0, 1)));
+        _field.setAnyCell(new ObliviousCell(new CellPosition(2, 2), 5, _field));
+
     }
 
     @Override
     protected void seedKey() {
-        ((Cell)_field.getCell(2,2)).putKey(new Key());
-        ((Cell)_field.getCell(3,3)).putKey(new Key());
-        ((Cell)_field.getCell(5,7)).putKey(new Key());
-        ((Cell)_field.getCell(9,9)).putKey(new Key());
-        ((Cell)_field.getCell(7,7)).putKey(new Key());
-        ((Cell)_field.getCell(2,5)).putKey(new Key());
-        ((Cell)_field.getCell(7,5)).putKey(new Key());
+        //((PassableCell) _field.getCell(2, 2)).putKey(_field.getCell(2, 2) instanceof PassableCell ? new Key() : null );
+        ((PassableCell) _field.getCell(5, 5)).putKey(new Key());
+        ((PassableCell) _field.getCell(3, 3)).putKey(new Key());
+        ((PassableCell) _field.getCell(5, 1)).putKey(new Key());
+        ((PassableCell) _field.getCell(2, 5)).putKey(new Key());
+        ((PassableCell) _field.getCell(7, 3)).putKey(new Key());
     }
-
-
 }
