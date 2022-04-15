@@ -1,6 +1,7 @@
 package Tests;
 
 import Model.gamefield.GameField;
+import Model.gamefield.cells.UnitCell;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -12,7 +13,7 @@ public class TestAbstractCell {
     {
         GameField _field = new GameField(3,3);
 
-        boolean resultPut = _field.getCell(0, 0).putRobot(_field.robot());
+        boolean resultPut = ((UnitCell)_field.getCell(0, 0)).putRobot(_field.robot());
 
         boolean expectedPut = true;
 
@@ -25,8 +26,8 @@ public class TestAbstractCell {
     {
         GameField _field = new GameField(3,3);
 
-        _field.getCell(0, 0).putRobot(_field.robot());
-        boolean resultPut = _field.getCell(0, 0).putRobot(_field.robot());
+        ((UnitCell)_field.getCell(0, 0)).putRobot(_field.robot());
+        boolean resultPut = ((UnitCell)_field.getCell(0, 0)).putRobot(_field.robot());
 
         boolean expectedPut = false;
 
