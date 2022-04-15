@@ -15,16 +15,17 @@ abstract public class Builder {
 
     public void run() {
         createField();
-        seedExit();
+        seedAnyCell();
+        _field.linkCells();
         seedRobot();
         seedKey();
     }
 
+    abstract protected void seedAnyCell();
+
     abstract protected void seedRobot();
 
     abstract protected void createField();
-
-    abstract protected void seedExit();
 
     abstract protected void seedKey();
 }
