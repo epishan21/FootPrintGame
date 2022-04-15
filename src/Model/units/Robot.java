@@ -3,6 +3,7 @@ package Model.units;
 import Model.events.RobotActionEvent;
 import Model.events.RobotActionListener;
 import Model.gamefield.*;
+import Model.gamefield.cells.*;
 
 import java.awt.*;
 import java.util.*;
@@ -11,7 +12,7 @@ import java.util.List;
 public class Robot {
 
     // ----------------------- Свойства --------------------------
-   AbstractCell _cellOwner;
+    AbstractCell _cellOwner;
 
     private Color footPrint = Color.orange;
 
@@ -24,7 +25,7 @@ public class Robot {
 
     // --------------------------- Перемещение ------------------------------------
     private boolean canMoveTo(AbstractCell to) {
-        return to.getClass().equals(TargetHexagon.class) || ((Cell)to).getFootprint() != this.footPrint;
+          return to.getClass().equals(TargetHexagon.class) || to.getClass().equals(PassableCell.class) || to instanceof UnitCell && ((FootprintCell)to).getFootprint() != this.footPrint;
     }
 
     public void move(Direction direct) {
@@ -37,14 +38,14 @@ public class Robot {
         }
 
         if (canMoveTo(newPos)) {
-            if (!newPos.isEmpty() && ((Cell)newPos).getKey() != null) {
+            if (!((UnitCell)newPos).isEmpty() && ((PassableCell)newPos).getKey() != null) {
                 //подобрать ключ
                 this.putKey(newPos);
             }
             //шагнуть
-            pos.extractRobot();
-            newPos.putRobot(this);
-            if(!(pos.getClass().equals(TargetHexagon.class)))
+            ((UnitCell)pos).extractRobot();
+            ((UnitCell)newPos).putRobot(this);
+            if(!(pos.getClass().equals(TargetHexagon.class)) && !(pos.getClass().equals(PassableCell.class)))
                 colorCell(pos); // установить цвет ячейки равным цвету робота
         }
 
@@ -55,14 +56,14 @@ public class Robot {
     // ---------------------- Закрашивание ячейки -----------------------------
     public void colorCell(AbstractCell pos)
     {
-        ((Cell) pos).setFootprint(this.footPrint);
+        ((FootprintCell)pos).setFootprint(this.footPrint);
     }
 
     // ---------------------- Взаимодействие с ключем -----------------------------
     public void putKey(AbstractCell pos)
     {
-        Key.keys.remove(((Cell)pos).getKey());
-        ((Cell)pos).extractKey();
+        Key.keys.remove(((PassableCell)pos).getKey());
+        ((PassableCell)pos).extractKey();
     }
 
     // ---------------------- Взаимодействие с владельцем -----------------------------
