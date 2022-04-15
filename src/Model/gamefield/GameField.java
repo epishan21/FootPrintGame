@@ -1,9 +1,12 @@
 package Model.gamefield;
 
+import Model.gamefield.cells.AbstractCell;
+import Model.gamefield.cells.FootprintCell;
+import Model.gamefield.cells.TargetHexagon;
+import Model.units.Robot;
+
 import java.util.HashMap;
 import java.util.Iterator;
-
-import Model.units.Robot;
 
 // Шестиугольное поле, состоящее из ячеек
 public class GameField implements Iterable<AbstractCell> {
@@ -33,6 +36,10 @@ public class GameField implements Iterable<AbstractCell> {
         return getCell(new CellPosition(row, col));
     }
 
+    public CellPosition posTargetHexagon;
+
+    public CellPosition getPosTargetHexagon() { return posTargetHexagon; }
+
     public HashMap<CellPosition, AbstractCell> getCells()
     {
         return _cells;
@@ -52,7 +59,6 @@ public class GameField implements Iterable<AbstractCell> {
         _width = width;
         _height = height;
         buildField();
-        linkCells();
     }
 
     private void buildField() {
@@ -61,12 +67,12 @@ public class GameField implements Iterable<AbstractCell> {
         for (int row = 0; row < height(); row++) {
             for (int col = 0; col < width(); col++) {
                 CellPosition pos = new CellPosition(row, col);
-                _cells.put(pos, new Cell(pos));
+                _cells.put(pos, new FootprintCell(pos));
             }
         }
 
     }
-    private void linkCells() {
+    public void linkCells() {
         // Связываем ячейки
         for (int row = 0; row < height(); row++) {
             for (int col = 0; col < width(); col++) {
@@ -128,23 +134,25 @@ public class GameField implements Iterable<AbstractCell> {
         }
     }
 
-    public void setTargetHexagon(int row, int col){
-        CellPosition pos = new CellPosition(row, col);
+    public void setAnyCell(AbstractCell cell){
+        CellPosition pos = new CellPosition(cell.position().row(), cell.position().column());
 
-        // Если уже есть Целевой шестиугольник на карте, то второй не создавать
-        if(countTargetHexagon == 1)
-        {
-            return;
+        if(cell.getClass().equals(TargetHexagon.class)){
+            // Если уже есть Целевой шестиугольник на карте, то второй не создавать
+            if(countTargetHexagon == 1)
+            {
+                return;
+            }
+            else {
+                countTargetHexagon++;
+                posTargetHexagon = pos;
+            }
         }
         //удалить эту ячейку из массива перед добавлением
         _cells.remove(pos);
-        // Добавить ячейку
-        TargetHexagon hexagon = new TargetHexagon(pos);
 
-        _cells.put(pos, hexagon);
-        // Связываем ячейки
-        linkCells();
-        countTargetHexagon++;
+        // Добавить ячейку
+        _cells.put(pos, cell);
     }
 
     // ---------------------- Робот ---------------------------
