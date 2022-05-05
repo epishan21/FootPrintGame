@@ -1,10 +1,7 @@
 package Tests;
 
 import Model.gamefield.*;
-import Model.gamefield.cells.PassableCell;
-import Model.gamefield.cells.FootprintCell;
-import Model.gamefield.cells.TargetHexagon;
-import Model.gamefield.cells.UnitCell;
+import Model.gamefield.cells.*;
 import Model.units.Key;
 import org.junit.Assert;
 import org.junit.Test;
@@ -84,6 +81,57 @@ public class TestRobot {
     public void robotStepOutsideField()
     {
         GameField _field = new GameField(1,1);
+        _field.linkCells();
+        ((UnitCell)_field.getCell(0, 0)).putRobot(_field.robot());
+
+        _field.robot().move(Direction.south());
+
+        CellPosition expectedPos = new CellPosition( 0, 0 );
+        CellPosition resultPos = ((UnitCell)_field.getCell(0, 0)).getRobot().getPos();
+
+        Assert.assertEquals(expectedPos, resultPos);
+    }
+
+    //Робот шагает в всегда проходимый шестиугольник
+    @Test
+    public void robotStepIntoAlwaysPassableCell()
+    {
+        GameField _field = new GameField(3,3);
+        _field.setAnyCell(new AlwaysPassableCell(new CellPosition(1,0)));
+        _field.linkCells();
+        ((UnitCell)_field.getCell(0, 0)).putRobot(_field.robot());
+
+        _field.robot().move(Direction.south());
+
+        CellPosition expectedPos = new CellPosition( 1, 0 );
+        CellPosition resultPos = ((UnitCell)_field.getCell(1, 0)).getRobot().getPos();
+
+        Assert.assertEquals(expectedPos, resultPos);
+    }
+
+    //Робот шагает в забывающий шестиугольник
+    @Test
+    public void robotStepObliviousCell()
+    {
+        GameField _field = new GameField(3,3);
+        _field.setAnyCell(new ObliviousCell(new CellPosition(1,0), 3, _field));
+        _field.linkCells();
+        ((UnitCell)_field.getCell(0, 0)).putRobot(_field.robot());
+
+        _field.robot().move(Direction.south());
+
+        CellPosition expectedPos = new CellPosition( 1, 0 );
+        CellPosition resultPos = ((UnitCell)_field.getCell(1, 0)).getRobot().getPos();
+
+        Assert.assertEquals(expectedPos, resultPos);
+    }
+
+    //Робот хочет шагнуть в совсем непроходимый шестиугольник
+    @Test
+    public void robotStepBlockedCell()
+    {
+        GameField _field = new GameField(3,3);
+        _field.setAnyCell(new BlockedCell(new CellPosition(1,0)));
         _field.linkCells();
         ((UnitCell)_field.getCell(0, 0)).putRobot(_field.robot());
 
