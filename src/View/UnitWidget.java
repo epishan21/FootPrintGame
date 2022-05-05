@@ -1,8 +1,9 @@
 package View;
 
-import Model.gamefield.AbstractCell;
-import Model.gamefield.Cell;
-import Model.gamefield.TargetHexagon;
+import Model.gamefield.cells.AbstractCell;
+import Model.gamefield.cells.PassableCell;
+import Model.gamefield.cells.TargetHexagon;
+import Model.gamefield.cells.UnitCell;
 import Model.units.Key;
 import Model.units.Robot;
 
@@ -21,14 +22,16 @@ public class UnitWidget {
     }
 
     private Image getUnit(AbstractCell cell){
-        robot = cell.getRobot();
+        if(cell instanceof UnitCell) {
+            robot = ((UnitCell) cell).getRobot();
 
-        if(!cell.getClass().equals(TargetHexagon.class))
-            key = ((Cell)cell).getKey();
-        if (robot != null)
-            return getImage("robot");
-        else if (key != null) {
-            return getImage("key");
+            if (!cell.getClass().equals(TargetHexagon.class))
+                key = ((PassableCell) cell).getKey();
+            if (robot != null)
+                return getImage("robot");
+            else if (key != null) {
+                return getImage("key");
+            }
         }
         return null;
     }
