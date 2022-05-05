@@ -12,7 +12,7 @@ import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
-// Окно игры
+// Окно игры. Так же управляет робот с помощью клавиатуры
 public class GameFrame extends JFrame {
 
     Game _game;

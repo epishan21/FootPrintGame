@@ -98,7 +98,7 @@ public class TestGame {
         Assert.assertEquals(expectedGame, resultGame);
     }
 
-    // Игра проиграна так так нет пути до целевого шестиугольника
+    // Игра проиграна так так нет пути до ключа
     @Test
     public void StateLoseNoWayKey()
     {

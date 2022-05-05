@@ -10,7 +10,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 
-// Виджет для отрисовки поля и всего того, что на нем. Так же управляет робот с помощью клавиатуры
+// Виджет для отрисовки поля и всего того, что на нем.
 public class GameFieldView extends JPanel {
 
     private final CellPosition margins = new CellPosition(5, 5);

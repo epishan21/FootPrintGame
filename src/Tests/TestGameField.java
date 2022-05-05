@@ -23,7 +23,7 @@ public class TestGameField {
         Assert.assertEquals(expectedPut, resultPut);
     }
 
-    //Установить Целевой шестиугольник успешно
+    //Установить второй Целевой шестиугольник безуспешно
     @Test
     public void failSet()
     {

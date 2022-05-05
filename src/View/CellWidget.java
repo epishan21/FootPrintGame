@@ -1,10 +1,7 @@
 package View;
 
-import Model.gamefield.AbstractCell;
-import Model.gamefield.Cell;
-import Model.gamefield.TargetHexagon;
-import Model.units.Key;
-import Model.units.Robot;
+import Model.gamefield.cells.AbstractCell;
+
 
 import javax.swing.*;
 import java.awt.*;

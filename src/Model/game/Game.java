@@ -48,11 +48,11 @@ public class Game {
         @Override
         public void robotMakedMove(RobotActionEvent e, Iterator<RobotActionListener> iter) {
             // Если имеется путь до целевого шестиугольника
-            if (waysChecker.CheckWay(_field.robot().getPos(), _field.getPosTargetHexagon(), _field.getCells())){
+            if (waysChecker.checkWay(_field.robot().getPos(), _field.getPosTargetHexagon(), _field.getCells())){
                 int countKey = 0;
                 // Если имеется путь до каждого ключа на поле
                 for(int i = 0; i < Key.keys.size(); i++) {
-                    if (waysChecker.CheckWay(_field.robot().getPos(), Key.keys.get(i).getOwner().position(), _field.getCells()))
+                    if (waysChecker.checkWay(_field.robot().getPos(), Key.keys.get(i).getOwner().position(), _field.getCells()))
                         countKey++;
                 }
                 if (Key.keys.size() != countKey)

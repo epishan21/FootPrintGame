@@ -10,13 +10,13 @@ import java.util.List;
 // Проверка на наличие пути от робота до целевого шестиугольника
 public class WaysChecker {
 
-    public boolean CheckWay(CellPosition posRobot, CellPosition posCell, HashMap<CellPosition, AbstractCell> _cells) {
+    public boolean checkWay(CellPosition posUnit, CellPosition posCell, HashMap<CellPosition, AbstractCell> _cells) {
 
-        AbstractCell robotCell = _cells.get(posRobot); // Ячейка с роботом
+        AbstractCell unitCell = _cells.get(posUnit); // Ячейка с роботом
 
         List<AbstractCell> checkedCells = new ArrayList<>(); // Проверенные ячейки
         List<AbstractCell> toCheckCells = new ArrayList<>(); // Ячейки которые надо проверить
-        toCheckCells.add(robotCell);
+        toCheckCells.add(unitCell);
 
         // Пока есть что проверять
         while (!toCheckCells.isEmpty()) {
@@ -35,7 +35,9 @@ public class WaysChecker {
                     return true;
                 }
                 // Иначе если соседняя ячейка имеется и она не является следом цвета игрока и она еще не проверена
-                else if (nextCell instanceof UnitCell && (nextCell.getClass().equals(PassableCell.class) || nextCell.getClass().equals(TargetHexagon.class) || ((FootprintCell) nextCell).getFootprint() != ((UnitCell) robotCell).getRobot().getColor()) && !checkedCells.contains(nextCell)) {
+                else if (nextCell instanceof PassableCell && (nextCell.getClass().equals(AlwaysPassableCell.class) ||
+                        ((ObliviousCell) nextCell).isCellPassable(((UnitCell) unitCell).getRobot())) &&
+                        !checkedCells.contains(nextCell)) {
                     // Добавить в список ячеек которые надо проверить
                     toCheckCells.add(nextCell);
                 }
