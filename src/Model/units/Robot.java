@@ -25,7 +25,7 @@ public class Robot {
 
     // --------------------------- Перемещение ------------------------------------
     private boolean canMoveTo(AbstractCell to) {
-          return to.getClass().equals(TargetHexagon.class) || to.getClass().equals(PassableCell.class) || to instanceof UnitCell && ((FootprintCell)to).getFootprint() != this.footPrint;
+          return to.getClass().equals(TargetHexagon.class) || to.getClass().equals(AlwaysPassableCell.class) || to instanceof UnitCell && ((ObliviousCell)to).getFootprint() != this.footPrint;
     }
 
     public void move(Direction direct) {
@@ -45,18 +45,18 @@ public class Robot {
             //шагнуть
             ((UnitCell)pos).extractRobot();
             ((UnitCell)newPos).putRobot(this);
-            if(!(pos.getClass().equals(TargetHexagon.class)) && !(pos.getClass().equals(PassableCell.class)))
+            if(!(pos.getClass().equals(TargetHexagon.class)) && !(pos.getClass().equals(AlwaysPassableCell.class)))
                 colorCell(pos); // установить цвет ячейки равным цвету робота
-        }
 
-        // Генерируем событие
-        fireRobotAction();
+            // Генерируем событие
+            fireRobotAction();
+        }
     }
 
     // ---------------------- Закрашивание ячейки -----------------------------
     public void colorCell(AbstractCell pos)
     {
-        ((FootprintCell)pos).setFootprint(this.footPrint);
+        ((ObliviousCell)pos).setFootprint(this.footPrint);
     }
 
     // ---------------------- Взаимодействие с ключем -----------------------------

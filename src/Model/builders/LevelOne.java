@@ -23,12 +23,12 @@ public class LevelOne extends Builder {
         _field.setAnyCell(new BlockedCell(new CellPosition(1, 1)));
         _field.setAnyCell(new BlockedCell(new CellPosition(0, 3)));
         _field.setAnyCell(new BlockedCell(new CellPosition(5, 6)));
-        _field.setAnyCell(new PassableCell(new CellPosition(5, 5)));
-        _field.setAnyCell(new PassableCell(new CellPosition(4, 5)));
-        _field.setAnyCell(new PassableCell(new CellPosition(0, 2)));
+        _field.setAnyCell(new AlwaysPassableCell(new CellPosition(5, 5)));
+        _field.setAnyCell(new AlwaysPassableCell(new CellPosition(4, 5)));
+        _field.setAnyCell(new AlwaysPassableCell(new CellPosition(0, 2)));
         _field.setAnyCell(new TargetHexagon(new CellPosition(0, 1)));
         _field.setAnyCell(new TargetHexagon(new CellPosition(0, 1)));
-        _field.setAnyCell(new ObliviousCell(new CellPosition(2, 2), 5, _field));
+        _field.setAnyCell(new ObliviousCell(new CellPosition(2, 2), 3, _field));
 
     }
 

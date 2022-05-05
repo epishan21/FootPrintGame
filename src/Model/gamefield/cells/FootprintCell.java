@@ -1,19 +1,19 @@
 package Model.gamefield.cells;
 
 import Model.gamefield.CellPosition;
+import Model.units.Robot;
 
 import java.awt.*;
 
-public class FootprintCell extends PassableCell {
+public class FootprintCell extends ObliviousCell {
     public FootprintCell(CellPosition position) {
         super(position);
     }
 
     protected Color backgroundColor = new Color(136, 128, 170);
-    protected Color footPrint = backgroundColor;
 
-    public Color getFootprint() { return footPrint; }
+    public Color getFootprint() { return backgroundColor; }
 
-    public void setFootprint(Color color) { this.footPrint = color; }
+    public void setFootprint(Color color) { this.backgroundColor = color; }
 
 }
